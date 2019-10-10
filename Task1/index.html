@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Icon Scout 1</title>
+    <style type="text/css">
+    .container {
+        display: block;
+        width: 100%;
+        margin-top: 100px;
+        text-align: center;
+
+    }
+
+    .menu {
+        display: table-cell;
+        position: relative;
+        width: 33.33%;
+        padding: 10px 20px;
+        text-align: center;
+
+    }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="menu">
+            <form id="addForm" onsubmit="event.preventDefault(); addItem();">
+                <input type="text" name="key" placeholder="key" />
+                <input type="text" name="value" placeholder="Value" />
+                <button type="submit">Save</button>
+            </form>
+            <div>
+                <h1 id="addItemOutput">
+                </h1>
+            </div>
+        </div>
+        <div class="menu">
+            <form id="searchForm" onsubmit="event.preventDefault(); searchItem();">
+                <input type="text" name="key" placeholder="key">
+                <button type="submit">Search</button>
+            </form>
+            <h1 id="searchOutput">
+            </h1>
+        </div>
+        <div class="menu">
+            <form id="deleteForm" onsubmit="event.preventDefault(); deleteItem();">
+                <input type="text" name="key" placeholder="key">
+                <button type="submit">Delete</button>
+            </form>
+            <h1 id="deleteOutput">
+            </h1>
+        </div>
+    </div>
+    <script type="text/javascript" src="script1.js"></script>
+    <script>
+
+    function addItem() {
+        let myKey = document.getElementById("addForm").key.value
+        let myValue = document.getElementById("addForm").value.value
+
+        let addItemOutput = document.getElementById("addItemOutput")
+
+        if (!MyStorage.setItem(myKey, myValue)) {
+            addItemOutput.innerHTML = myKey + ' is already exist';
+        } else {
+            addItemOutput.innerHTML = myKey + ' added successfuly';
+        }
+        document.getElementById("addForm").reset();
+
+    }
+
+    function searchItem() {
+        let myKey = document.getElementById("searchForm").key.value
+
+        let searchOutput = MyStorage.getItem(myKey);
+
+        if (!searchOutput) {
+            searchOutput = "Not Found"
+        }
+
+        document.getElementById("searchOutput").innerHTML = searchOutput;
+
+    }
+
+    function deleteItem() {
+        let myKey = document.getElementById("deleteForm").key.value
+        let deleteOutput = document.getElementById("deleteOutput")
+
+        if (!MyStorage.removeItem(myKey)) {
+
+            deleteOutput.innerHTML = 'Item not exist';
+        } else {
+
+            deleteOutput.innerHTML = 'Deleted successfuly!';
+        }
+        document.getElementById("deleteForm").reset();
+        
+
+    }
+    </script>
+</body>
+
+</html>
